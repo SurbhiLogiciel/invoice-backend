@@ -1,3 +1,2 @@
-echo "#!/bin/sh" > .husky/commit-msg
-echo "npx --no-install commitlint --edit $1" >> .husky/commit-msg
-chmod +x .husky/commit-msg
+#!/bin/sh
+npx --no-install commitlint --edit .git/COMMIT_EDITMSG
