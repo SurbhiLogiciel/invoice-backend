@@ -5,7 +5,7 @@
     "@eslint/js": "^9.9.1",
     "@types/jest": "^29.5.12",
     "eslint": "^9.9.1",
-    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react": "^7.35.2",
     "globals": "^15.9.0",
     "husky": "^9.1.5",
     "jest": "^29.7.0",
@@ -31,10 +31,12 @@
     ]
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"]
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "jest",
     "format": "prettier --write .",
     "prepare": "husky install"

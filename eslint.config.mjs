@@ -1,18 +1,32 @@
-// eslint.config.js
-export default {
-  env: {
-    node: true,
-    es2021: true,
+import eslintPluginReact from "eslint-plugin-react";
+
+export default [
+  {
+    languageOptions: {
+      ecmaVersion: 2021,
+      sourceType: "module",
+      globals: {
+        browser: true,
+        node: true,
+      },
+    },
+    plugins: {
+      react: eslintPluginReact,
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      semi: ["error", "always"],
+      "react/prop-types": "off",
+    },
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:prettier/recommended', // If using Prettier
-  ],
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module',
+  {
+    files: ["**/*.jsx", "**/*.tsx"],
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
   },
-  rules: {
-    // Define your custom rules here
-  },
-};
+];
