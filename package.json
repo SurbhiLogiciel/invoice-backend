@@ -4,18 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint .",
     "test": "jest",
     "start": "npx tsx src/index.ts",
     "watch": "npx tsx watch src/index.ts",
     "format": "prettier --write .",
     "prepare": "husky"
   },
- "lint-staged": {
-  "*.{ts,tsx,js,jsx}": [
-    "eslint --fix"
-  ]
-},
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "npx lint-staged"

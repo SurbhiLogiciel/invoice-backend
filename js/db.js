@@ -20,7 +20,7 @@ const Connection = (url) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("MongoDb connected successfully");
     }
     catch (error) {
-        console.log("MongoDb not connect");
+        console.error("MongoDb not connect", error);
     }
 });
 exports.Connection = Connection;

@@ -18,7 +18,6 @@ const generateOtp_1 = __importDefault(require("@/utils.ts/generateOtp"));
 const sendOtpEmail_1 = require("@/utils.ts/sendOtpEmail");
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
-    console.log("1");
     if (!email) {
         return res.status(404).json({ msg: "Email not found" });
     }
@@ -38,20 +37,3 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.registerUser = registerUser;
-// export const otpVerification = async(req: Request, res: Response) => {
-//     const { otp } = req.body;
-//     if(!otp) {
-//         return res.status(404).json({ msg: "otp not found"})
-//     }
-//     try {
-//         const user = await userModel.findOne({ otp });
-//         if(otp === user?.otp){
-//             return res.status(200).json({ msg: "otp verified"})
-//         } else {
-//             return res.status(400).json({ msg: "OTP didn't matched"})
-//         }
-//     } catch(error) {
-//         console.log("Error occured while verifying otp");
-//         return res.status(500).json({ msg: "Error to verify otp",error})
-//     }
-// }
