@@ -3,7 +3,7 @@ import generateOtp from "@/utils.ts/generateOtp";
 import { sendOTPEmail } from "@/utils.ts/sendOtpEmail";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { generateToken } from "@/utils.ts/generateToken";
+import { JWT_SECRET } from "@/utils.ts/generateToken";
 import bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
 
@@ -63,7 +63,7 @@ export const userLogin = async(req: Request, res: Response):Promise<Response> =>
         if(!isValidPassword) {
             return res.status(401).json({ msg: "Invalid Credentials"});
         }
-        const token = jwt.sign({ id: user._id, email: user.email }, generateToken())
+        const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' })
         if(!token) {
             return res.status(500).json({ msg: "Failed to generate token"})
         }
@@ -74,6 +74,8 @@ export const userLogin = async(req: Request, res: Response):Promise<Response> =>
         return res.status(500).json({ msg: "User login failed", error})
     }
 }
+
+
 
 
 
