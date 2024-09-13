@@ -1,6 +1,3 @@
-import crypto from 'crypto';
+import crypto from "crypto";
 
-export const generateToken = (): string => {
-    const secret = crypto.randomBytes(16).toString('hex');
-    return secret;
-}
+export const JWT_SECRET = crypto.randomBytes(32).toString("hex");

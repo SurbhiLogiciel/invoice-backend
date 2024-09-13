@@ -1,5 +1,5 @@
 import Admin from "@/models/adminModel";
-import { generateToken } from "@/utils.ts/generateToken";
+import { JWT_SECRET } from "@/utils.ts/generateToken";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -48,11 +48,9 @@ export const loginAdmin = async (
     }
 
     // Generate JWT Token
-    const token = jwt.sign(
-      { id: admin._id, email: admin.email },
-      generateToken(),
-      { expiresIn: "1h" }
-    );
+    const token = jwt.sign({ id: admin._id, email: admin.email }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     if (!token) {
       return res.status(500).json({ msg: "Failed to generate token" });

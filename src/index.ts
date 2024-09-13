@@ -1,5 +1,7 @@
 import express from "express";
 import { Connection } from "./db";
+import dotenv from "dotenv";
+
 import userRoute from "./routes/userRoutes";
 import adminRoute from "./routes/adminRoutes";
 
@@ -15,3 +17,4 @@ app.use("/api", adminRoute);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+dotenv.config();
