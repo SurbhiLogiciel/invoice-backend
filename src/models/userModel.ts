@@ -9,7 +9,7 @@ import mongoose,{Document, Schema} from "mongoose";
 
   const UserSchema: Schema<User> = new Schema({
     fullName: { type: String,  minlength: 5, maxlength: 15 },
-    password: { type: String,  minlength: 8, maxlength: 10 },
+    password: { type: String,  minlength: 4, maxlength: 10 },
     email: { type: String, required: true, unique: true },
     otp: { type: Number  },
     phoneNumber: { type: String, minlength: 10, maxlength: 12 },
