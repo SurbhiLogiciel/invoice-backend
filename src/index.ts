@@ -1,4 +1,4 @@
-import express  from "express";
+import express from "express";
 import { Connection } from "./db";
 import userRoute from "./routes/userRoutes";
 
@@ -11,5 +11,5 @@ app.use(express.json());
 app.use("/api", userRoute);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-})
+  console.log(`Server is running on port ${PORT}`);
+});
