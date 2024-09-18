@@ -15,7 +15,7 @@ adminRoute.post("/register/admin", validateRegister, registerAdmin);
 adminRoute.post("/login/admin", validateLogin, loginAdmin);
 
 adminRoute.get("/protected/admin", verifyToken, (req, res) => {
-  res.json({ message: "This is a protected route", user: req.user });
+  res.json({ message: "This is a protected route", user: req.admin });
 });
 
 export default adminRoute;
