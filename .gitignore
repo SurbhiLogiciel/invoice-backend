@@ -1,5 +1,6 @@
 # Ignore the JS build directory
 /js/
+/dist
 
 # Ignore environment variables file
 .env
