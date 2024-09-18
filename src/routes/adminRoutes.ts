@@ -1,10 +1,7 @@
 import express from "express";
 import { registerAdmin, loginAdmin } from "../controllers/adminController";
-import {
-  validateLogin,
-  validateRegister,
-  verifyToken,
-} from "@/middlewares/adminAuthMiddleware";
+import { verifyToken } from "@/middlewares/adminAuthMiddleware";
+import { validateLogin, validateRegister } from "@/validations/adminValidation";
 
 const adminRoute = express.Router();
 
