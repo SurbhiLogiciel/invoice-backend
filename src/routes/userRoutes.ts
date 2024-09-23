@@ -1,8 +1,10 @@
 import express from "express";
 import { validateRequest } from "@/middlewares/validationMiddleware";
 import { userValidation } from "@/schemas/userValidationSchema";
+import { createUserSchema } from "@/schemas/createUserSchema";
 import {
-  registerUser,
+  registerProfile,
+  registerUserEmail,
   otpVerification,
   userLogin,
   dummyApi,
@@ -11,7 +13,9 @@ import { verifyToken } from "@/middlewares/userAuthMiddleware";
 
 const userRoute = express.Router();
 
-userRoute.post("/register/user", validateRequest(userValidation), registerUser);
+userRoute.post("/register/profile/:id", validateRequest(createUserSchema), registerProfile);
+
+userRoute.post("/register/userEmail", validateRequest(userValidation), registerUserEmail);
 userRoute.post("/register/verifyOtp/:id", validateRequest(userValidation), otpVerification);
 
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);

@@ -6,8 +6,42 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
 
-export const registerUser = async (
+export const registerProfile = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const userId = new mongoose.Types.ObjectId(id);
+
+    const { fullName, phoneNumber, password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ msg: "Passwords do not match" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        fullName,
+        phoneNumber,
+        password: hashedPassword, 
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    return res.status(200).json({ msg: "User profile registered successfully" });
+  } catch (error) {
+    console.log("Error occurred while adding user profile:", error);
+    return res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const registerUserEmail = async (
   req: Request,
   res: Response,
 ): Promise<Response> => {
