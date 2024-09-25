@@ -1,21 +1,22 @@
-import mongoose, { Schema, Model, Document } from 'mongoose';
+import mongoose, { Schema, Model, Document } from "mongoose";
 
 interface User extends Document {
-    fullName: string,
-    email: string,
-    otp: number,
-    phoneNumber: string,
-    password: string,
-
+  fullName: string;
+  email: string;
+  otp: number;
+  phoneNumber: string;
+  password: string;
+  plan: string;
 }
 
 const userSchema: Schema = new mongoose.Schema({
-    fullName: { type: String},
-    email: { type: String, unique: true },
-    otp: { type: Number},
-    phoneNumber: { type: String },
-    password: { type: String },
-})
+  fullName: { type: String },
+  email: { type: String, unique: true },
+  otp: { type: Number },
+  phoneNumber: { type: String },
+  password: { type: String },
+  plan: { type: String, enum: ["free", "business"], default: "free" },
+});
 
-const userModel: Model<User> = mongoose.model<User>('User', userSchema);
+const userModel: Model<User> = mongoose.model<User>("User", userSchema);
 export default userModel;

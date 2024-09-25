@@ -7,6 +7,11 @@ import { JWT_SECRET } from "@/utils.ts/generateToken";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 
+const plans = {
+  free: 0,
+  business: 20,
+};
+
 export const registerUser = async (
   req: Request,
   res: Response
@@ -78,5 +83,43 @@ export const userLogin = async (
   } catch (error) {
     console.log("User login Failed", error);
     return res.status(500).json({ msg: "User login failed", error });
+  }
+};
+
+export const selectPlan = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const { userId, plan } = req.body;
+
+  if (!plan || !plans.hasOwnProperty(plan)) {
+    return res.status(400).json({
+      error: 'Invalid plan. Please choose either "free" or "business".',
+    });
+  }
+
+  try {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found.",
+      });
+    }
+
+    user.plan = plan;
+    await user.save();
+
+    const totalAmount = plans[plan as keyof typeof plans];
+
+    return res.status(200).json({
+      message: `You have selected the ${plan} plan.`,
+      plan: plan,
+      totalAmount: totalAmount,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server error. Please try again later.",
+    });
   }
 };
