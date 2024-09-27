@@ -7,13 +7,13 @@ export const sendOTPEmail = async (
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "richa@logiciel.io",
-      pass: "@1605richa",
+      user: "invoice8210@gmail.com",
+      pass: "fpxnadjmbviiwqly",
     },
   });
 
   const mailOptions = {
-    from: "invoicing96@gmail.com",
+    from: "invoice8210@gmail.com",
     to: email,
     subject: "Your otp code",
     text: `Your OTP is ${otp}`,

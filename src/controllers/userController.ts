@@ -8,28 +8,34 @@ import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
-export const registerProfile = async (req: Request, res: Response) => {
+export const registerUserProfile = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const userId = new mongoose.Types.ObjectId(id);
 
-    const { fullName, phoneNumber, password, confirmPassword } = req.body;
+    const { companyId, fullName, phoneNumber, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ msg: "Passwords do not match" });
     }
+
+    if (!companyId) {
+      return res.status(400).json({ msg: "Company ID is required" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       {
+        companyId,
         fullName,
         phoneNumber,
-        password: hashedPassword, 
+        password: hashedPassword,
       },
       { new: true }
     );
-
+ 
     if (!updatedUser) {
       return res.status(404).json({ msg: "User not found" });
     }

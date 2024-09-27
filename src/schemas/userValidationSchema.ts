@@ -5,7 +5,8 @@ export const  userValidation = Joi.object({
     password: Joi.string().min(4).max(10),
     email: Joi.string().email(),
     otp: Joi.number().integer(),
-    phoneNumber: Joi.string().min(10).max(10)
+    phoneNumber: Joi.string().min(10).max(10),
+    companyId: Joi.string()
 });
 
 

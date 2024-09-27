@@ -3,7 +3,7 @@ import { validateRequest } from "@/middlewares/validationMiddleware";
 import { userValidation } from "@/schemas/userValidationSchema";
 import { createUserSchema } from "@/schemas/createUserSchema";
 import {
-  registerProfile,
+  registerUserProfile,
   registerUserEmail,
   otpVerification,
   userLogin,
@@ -13,7 +13,7 @@ import { verifyToken } from "@/middlewares/userAuthMiddleware";
 
 const userRoute = express.Router();
 
-userRoute.post("/register/profile/:id", validateRequest(createUserSchema), registerProfile);
+userRoute.post("/register/userProfile/:id", validateRequest(createUserSchema), registerUserProfile);
 
 userRoute.post("/register/userEmail", validateRequest(userValidation), registerUserEmail);
 userRoute.post("/register/verifyOtp/:id", validateRequest(userValidation), otpVerification);
