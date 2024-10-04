@@ -13,12 +13,24 @@ import { verifyToken } from "@/middlewares/userAuthMiddleware";
 
 const userRoute = express.Router();
 
-userRoute.post("/register/userProfile/:id", validateRequest(createUserSchema), registerUserProfile);
+userRoute.post(
+  "/register/userProfile/:id",
+  validateRequest(createUserSchema),
+  registerUserProfile,
+);
 
-userRoute.post("/register/userEmail", validateRequest(userValidation), registerUserEmail);
-userRoute.post("/register/verifyOtp/:id", validateRequest(userValidation), otpVerification);
+userRoute.post(
+  "/register/userEmail",
+  validateRequest(userValidation),
+  registerUserEmail,
+);
+userRoute.post(
+  "/register/verifyOtp/:id",
+  validateRequest(userValidation),
+  otpVerification,
+);
 
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);
-userRoute.get("/dummy",validateRequest(userValidation), verifyToken, dummyApi);
+userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);
 
 export default userRoute;

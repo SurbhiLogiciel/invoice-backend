@@ -6,7 +6,9 @@ export const validateRequest = (schema: ObjectSchema) => {
     const { error } = schema.validate(req.body, { abortEarly: false }); // AbortEarly to get all errors, not just the first
 
     if (error) {
-      const errorMessage = error.details.map(detail => detail.message).join(", "); // Combine all error messages
+      const errorMessage = error.details
+        .map((detail) => detail.message)
+        .join(", "); // Combine all error messages
       return res.status(400).json({ error: errorMessage }); // Return the actual error message(s)
     }
     next();

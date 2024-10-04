@@ -13,7 +13,8 @@ export const registerUserProfile = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = new mongoose.Types.ObjectId(id);
 
-    const { companyId, fullName, phoneNumber, password, confirmPassword } = req.body;
+    const { companyId, fullName, phoneNumber, password, confirmPassword } =
+      req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ msg: "Passwords do not match" });
@@ -33,14 +34,16 @@ export const registerUserProfile = async (req: Request, res: Response) => {
         phoneNumber,
         password: hashedPassword,
       },
-      { new: true }
+      { new: true },
     );
- 
+
     if (!updatedUser) {
       return res.status(404).json({ msg: "User not found" });
     }
 
-    return res.status(200).json({ msg: "User profile registered successfully" });
+    return res
+      .status(200)
+      .json({ msg: "User profile registered successfully" });
   } catch (error) {
     console.log("Error occurred while adding user profile:", error);
     return res.status(500).json({ message: "Server error", error });
@@ -91,7 +94,6 @@ export const otpVerification = async (
     } else {
       return res.status(401).json({ msg: "Invalid OTP" });
     }
-
   } catch (error) {
     return res.status(500).json({ msg: "Otp verification failed", error });
   }
@@ -119,7 +121,7 @@ export const userLogin = async (
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: "1h",
     });
-    
+
     return res.status(200).json({ msg: "User logged in Successfully", token });
   } catch (error) {
     console.log("User login Failed", error);

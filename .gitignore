@@ -2,4 +2,3 @@
 node_modules/*
 eslint.config.mjs.backup
 js/*
-vercel/*

@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-# . "$(dirname "$0")/h"
-npm test
-npx run lint
-npm run format
