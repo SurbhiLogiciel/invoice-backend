@@ -12,15 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Connection = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const Connection = (url) => __awaiter(void 0, void 0, void 0, function* () {
+exports.sendOTPEmail = void 0;
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const sendOTPEmail = (email, otp) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = nodemailer_1.default.createTransport({
+        service: "gmail",
+        auth: {
+            user: "richa@logiciel.io",
+            pass: "@1605richa",
+        },
+    });
+    const mailOptions = {
+        from: "invoicing96@gmail.com",
+        to: email,
+        subject: "Your otp code",
+        text: `Your OTP is ${otp}`,
+    };
     try {
-        yield mongoose_1.default.connect(url);
-        console.log("MongoDb connected successfully");
+        yield transporter.sendMail(mailOptions);
+        console.log("Email sent successfully");
     }
     catch (error) {
-        console.error("MongoDb not connect", error);
+        console.log("Error occured while sending email ", error);
     }
 });
-exports.Connection = Connection;
+exports.sendOTPEmail = sendOTPEmail;
