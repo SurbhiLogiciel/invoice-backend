@@ -12,22 +12,22 @@ import {
 import { verifyToken } from "@/middlewares/userAuthMiddleware";
 
 const userRoute = express.Router();
-
+console.log("ssd");
 userRoute.post(
   "/register/userProfile/:id",
   validateRequest(createUserSchema),
-  registerUserProfile,
+  registerUserProfile
 );
 
 userRoute.post(
   "/register/userEmail",
   validateRequest(userValidation),
-  registerUserEmail,
+  registerUserEmail
 );
 userRoute.post(
   "/register/verifyOtp/:id",
   validateRequest(userValidation),
-  otpVerification,
+  otpVerification
 );
 
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);

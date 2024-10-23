@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 
 export const registerUserProfile = async (req: Request, res: Response) => {
   try {
+    console.log("function");
     const { id } = req.params;
     const userId = new mongoose.Types.ObjectId(id);
 
@@ -52,11 +53,16 @@ export const registerUserProfile = async (req: Request, res: Response) => {
 
 export const registerUserEmail = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<Response> => {
   const { email } = req.body;
 
   try {
+    const existingUser = await UserModel.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ msg: "Email already exists" });
+    }
+
     const otp = generateOtp(6);
     const user = new UserModel({
       email,
@@ -64,14 +70,17 @@ export const registerUserEmail = async (
     });
 
     await user.save();
-    await sendOTPEmail(email, otp);
 
-    return res.status(200).json({ msg: "Otp sent to your email" });
+    await sendOTPEmail(email, otp);
+    return res
+      .status(201)
+      .json({ msg: "Otp sent to your email", userId: user._id });
   } catch (error) {
-    console.log("Error occured while registering user");
-    return res.status(500).json({ msg: "Error to send email", error });
+    console.log("Error occurred while registering user:", error);
+    return res.status(500).json({ msg: "Error sending email", error });
   }
 };
+
 
 export const otpVerification = async (
   req: Request,
@@ -83,17 +92,21 @@ export const otpVerification = async (
   try {
     const userId = new ObjectId(id);
     const user = await UserModel.findOne({ _id: userId });
-
+    
     if (!user) {
       console.log(otp);
       return res.status(404).json({ msg: "User Not Found" });
     }
-
-    if (otp === user?.otp) {
-      return res.status(200).json({ msg: "User Verified" });
-    } else {
-      return res.status(401).json({ msg: "Invalid OTP" });
-    }
+     console.log("Received OTP:", otp);
+     console.log("Stored OTP:", user?.otp);
+    
+    console.log("Otp verification workinhg=")
+     if (String(otp) === String(user?.otp)) {
+       console.log("OTP verified successfully");
+       return res.status(200).json({ msg: "User Verified", userId: user._id });
+     } else {
+       return res.status(401).json({ msg: "Otp sent to your email" });
+     }
   } catch (error) {
     return res.status(500).json({ msg: "Otp verification failed", error });
   }
