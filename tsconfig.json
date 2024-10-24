@@ -9,7 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "./js",
+    "outDir": "./dist",
     "rootDir": "./src",
     "resolveJsonModule": true,
     "baseUrl": ".",

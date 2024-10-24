@@ -6,6 +6,7 @@ interface User extends Document {
   otp: number;
   phoneNumber: string;
   password: string;
+  plan: string;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -15,6 +16,7 @@ const UserSchema: Schema<User> = new Schema({
   email: { type: String, unique: true },
   otp: { type: Number },
   phoneNumber: { type: String, minlength: 10, maxlength: 10 },
+  plan: { type: String, enum: ["free", "business"], default: "free" },
 });
 
 export const UserModel = mongoose.model<User>("User", UserSchema);

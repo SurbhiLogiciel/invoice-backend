@@ -8,6 +8,11 @@ import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
+const plans = {
+  free: 0,
+  business: 20,
+};
+
 export const registerUserProfile = async (req: Request, res: Response) => {
   try {
     console.log("function");
@@ -35,7 +40,7 @@ export const registerUserProfile = async (req: Request, res: Response) => {
         phoneNumber,
         password: hashedPassword,
       },
-      { new: true },
+      { new: true }
     );
 
     if (!updatedUser) {
@@ -81,10 +86,46 @@ export const registerUserEmail = async (
   }
 };
 
+export const selectPlan = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const { userId, plan } = req.body;
 
+  if (!plan || !plans.hasOwnProperty(plan)) {
+    return res.status(400).json({
+      error: 'Invalid plan. Please choose either "free" or "business".',
+    });
+  }
+
+  try {
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found.",
+      });
+    }
+
+    user.plan = plan;
+    await user.save();
+
+    const totalAmount = plans[plan as keyof typeof plans];
+
+    return res.status(200).json({
+      message: `You have selected the ${plan} plan.`,
+      plan: plan,
+      totalAmount: totalAmount,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server error. Please try again later.",
+    });
+  }
+};
 export const otpVerification = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<Response> => {
   const { id } = req.params;
   const { otp } = req.body;
@@ -92,21 +133,21 @@ export const otpVerification = async (
   try {
     const userId = new ObjectId(id);
     const user = await UserModel.findOne({ _id: userId });
-    
+
     if (!user) {
       console.log(otp);
       return res.status(404).json({ msg: "User Not Found" });
     }
-     console.log("Received OTP:", otp);
-     console.log("Stored OTP:", user?.otp);
-    
-    console.log("Otp verification workinhg=")
-     if (String(otp) === String(user?.otp)) {
-       console.log("OTP verified successfully");
-       return res.status(200).json({ msg: "User Verified", userId: user._id });
-     } else {
-       return res.status(401).json({ msg: "Otp sent to your email" });
-     }
+    console.log("Received OTP:", otp);
+    console.log("Stored OTP:", user?.otp);
+
+    console.log("Otp verification workinhg=");
+    if (String(otp) === String(user?.otp)) {
+      console.log("OTP verified successfully");
+      return res.status(200).json({ msg: "User Verified", userId: user._id });
+    } else {
+      return res.status(401).json({ msg: "Otp sent to your email" });
+    }
   } catch (error) {
     return res.status(500).json({ msg: "Otp verification failed", error });
   }
@@ -114,7 +155,7 @@ export const otpVerification = async (
 
 export const userLogin = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<Response> => {
   const { email, password } = req.body;
 

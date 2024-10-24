@@ -8,6 +8,7 @@ import {
   otpVerification,
   userLogin,
   dummyApi,
+  selectPlan,
 } from "@/controllers/userController";
 import { verifyToken } from "@/middlewares/userAuthMiddleware";
 
@@ -32,5 +33,7 @@ userRoute.post(
 
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);
 userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);
+
+userRoute.post("/user/select-plan", selectPlan);
 
 export default userRoute;
