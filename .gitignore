@@ -10,3 +10,5 @@ node_modules/*
 
 # Ignore backup of eslint configuration
 eslint.config.mjs.backup
+eslint.config.mjs.backup
+js/*
