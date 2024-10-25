@@ -18,19 +18,19 @@ const sendOTPEmail = (email, otp) => __awaiter(void 0, void 0, void 0, function*
     const transporter = nodemailer_1.default.createTransport({
         service: "gmail",
         auth: {
-            user: 'richa@logiciel.io',
-            pass: '@1605richa'
+            user: "richa@logiciel.io",
+            pass: "@1605richa",
         },
     });
     const mailOptions = {
-        from: 'invoicing96@gmail.com',
+        from: "invoicing96@gmail.com",
         to: email,
-        subject: 'Your otp code',
+        subject: "Your otp code",
         text: `Your OTP is ${otp}`,
     };
     try {
         yield transporter.sendMail(mailOptions);
-        console.log('Email sent successfully');
+        console.log("Email sent successfully");
     }
     catch (error) {
         console.log("Error occured while sending email ", error);

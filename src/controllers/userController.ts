@@ -1,9 +1,9 @@
-import userModel from "@/models/userModel";
+import { UserModel } from "@/models/userModel";
 import generateOtp from "@/utils.ts/generateOtp";
 import { sendOTPEmail } from "@/utils.ts/sendOtpEmail";
+import { JWT_SECRET } from "@/utils.ts/generateToken";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "@/utils.ts/generateToken";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 
@@ -22,7 +22,7 @@ export const registerUser = async (
   }
   try {
     const otp = generateOtp(6);
-    const user = new userModel({
+    const user = new UserModel({
       email,
       otp,
     });
@@ -45,7 +45,7 @@ export const otpVerification = async (
   }
   try {
     const userId = new ObjectId(id);
-    const user = await userModel.findOne({ _id: userId });
+    const user = await UserModel.findOne({ _id: userId });
     if (!user) {
       return res.status(404).json({ msg: "User Not Found" });
     }
@@ -65,7 +65,7 @@ export const userLogin = async (
 ): Promise<Response> => {
   try {
     const { email, password } = req.body;
-    const user = await userModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
@@ -96,7 +96,7 @@ export const selectPlan = async (
   }
 
   try {
-    const user = await userModel.findById(userId);
+    const user = await UserModel.findById(userId);
 
     if (!user) {
       return res.status(404).json({
