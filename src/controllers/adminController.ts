@@ -58,7 +58,6 @@ export const loginAdmin = async (
 
     return res.status(200).json({ msg: "Admin logged in successfully", token });
   } catch (error) {
-    console.log("Admin login failed", error);
     return res.status(500).json({ msg: "Admin login failed", error });
   }
 };

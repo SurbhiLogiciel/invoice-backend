@@ -30,7 +30,6 @@ export const registerUser = async (
     await sendOTPEmail(email, otp);
     return res.status(200).json({ msg: "Otp sent to your email" });
   } catch (error) {
-    console.log("Error occured while registering user");
     return res.status(500).json({ msg: "Error to send email", error });
   }
 };
@@ -48,7 +47,6 @@ export const otpVerification = async (
     const userId = new ObjectId(id);
     const user = await userModel.findOne({ _id: userId });
     if (!user) {
-      console.log(otp);
       return res.status(404).json({ msg: "User Not Found" });
     }
     if (otp === user?.otp) {
@@ -81,7 +79,6 @@ export const userLogin = async (
     }
     return res.status(200).json({ msg: "User logged in Successfully", token });
   } catch (error) {
-    console.log("User login Failed", error);
     return res.status(500).json({ msg: "User login failed", error });
   }
 };
