@@ -3,8 +3,6 @@ import { Connection } from "./db";
 import dotenv from "dotenv";
 
 import userRoute from "./routes/userRoutes";
-import adminRoute from "./routes/adminRoutes";
-import companyRoute from "./routes/companyRoutes";
 import cors from "cors";
 
 const app = express();
@@ -27,4 +25,3 @@ app.use("/api", companyRoute);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-dotenv.config();

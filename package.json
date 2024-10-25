@@ -8,11 +8,6 @@
     "start": "node js/index.js",
     "lint": "eslint .",
     "test": "jest",
-<<<<<<< HEAD
-    "build": "tsc",
-    "start": "npx tsx src/index.ts",
-=======
->>>>>>> main
     "watch": "npx tsx watch src/index.ts",
     "format": "prettier --write .",
     "prepare": "husky"

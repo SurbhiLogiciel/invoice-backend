@@ -20,6 +20,7 @@ export const sendOTPEmail = async (
   };
   try {
     await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully");
   } catch (error) {
     console.log("Error occured while sending email ", error);
   }
