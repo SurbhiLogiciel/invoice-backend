@@ -10,7 +10,6 @@ import mongoose from "mongoose";
 
 export const registerUserProfile = async (req: Request, res: Response) => {
   try {
-    console.log("function");
     const { id } = req.params;
     const userId = new mongoose.Types.ObjectId(id);
 
@@ -119,6 +118,8 @@ export const userLogin = async (
   const { email, password } = req.body;
 
   try {
+    console.log("login function is working ");
+    
     const user = await UserModel.findOne({ email });
 
     if (!user) {

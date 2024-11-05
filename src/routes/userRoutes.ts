@@ -30,7 +30,12 @@ userRoute.post(
   otpVerification
 );
 
-userRoute.post("/user/login", validateRequest(userValidation), userLogin);
-userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);
+userRoute.post("/user/login", userLogin),
+  userRoute.get(
+    "/dummy",
+    validateRequest(userValidation),
+    verifyToken,
+    dummyApi
+  );
 
 export default userRoute;
