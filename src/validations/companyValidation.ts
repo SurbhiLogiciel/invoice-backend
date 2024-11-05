@@ -16,6 +16,9 @@ export const companyRegistrationSchema = Joi.object({
   zip: Joi.string().required().messages({
     "any.required": "ZIP code is required",
   }),
+  id: Joi.string().required().messages({
+    "any.required": "id is required",
+  }),
 });
 
 export const validateCompanyRegistration = (req: any, res: any, next: any) => {

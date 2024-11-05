@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
 interface ICompany extends Document {
   companyName: string;
@@ -6,7 +6,6 @@ interface ICompany extends Document {
   city: string;
   state: string;
   zip: string;
-  userId: mongoose.Types.ObjectId;
 }
 
 const companySchema = new Schema<ICompany>({
@@ -29,11 +28,6 @@ const companySchema = new Schema<ICompany>({
   zip: {
     type: String,
     required: true,
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User model
-    required: true, // Ensure this field is required
   },
 });
 

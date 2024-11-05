@@ -1,17 +1,21 @@
+import Company from "@/models/companyModel";
 import { Request, Response } from "express";
-import Company from "../models/companyModel";
 import mongoose from "mongoose";
 
-export const registerCompany = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  const { id } = req.params;
-  const { companyName, location, city, state, zip } = req.body;
-
+export const registerCompany = async (req: Request, res: Response) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid user ID format" });
+    const { id } = req.body;
+
+    const userId = new mongoose.Types.ObjectId(id);
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required." });
+    }
+
+    const { companyName, location, city, state, zip } = req.body;
+
+    if (!companyName || !location || !city || !state || !zip) {
+      return res.status(400).json({ message: "All fields are required." });
     }
 
     const newCompany = new Company({
@@ -20,19 +24,15 @@ export const registerCompany = async (
       city,
       state,
       zip,
-      userId: id,
+      userId,
     });
 
-    const savedCompany = await newCompany.save();
+    await newCompany.save();
 
-    return res.status(201).json({
-      message: "Company registered successfully",
-      company: savedCompany,
-    });
+    return res
+      .status(201)
+      .json({ msg: "Company registered successfully", company: newCompany });
   } catch (error) {
-    return res.status(400).json({
-      error: "Company registration failed",
-      details: (error as Error).message,
-    });
+    return res.status(500).json({ message: "Server error", error });
   }
 };

@@ -19,7 +19,6 @@ export const registerUserProfile = async (req: Request, res: Response) => {
     if (password !== confirmPassword) {
       return res.status(400).json({ msg: "Passwords do not match" });
     }
-
     if (!companyId) {
       return res.status(400).json({ msg: "Company ID is required" });
     }
@@ -29,10 +28,12 @@ export const registerUserProfile = async (req: Request, res: Response) => {
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
       {
-        companyId,
-        fullName,
-        phoneNumber,
-        password: hashedPassword,
+        $set: {
+          companyId,
+          fullName,
+          phoneNumber,
+          password: hashedPassword,
+        },
       },
       { new: true }
     );
@@ -43,7 +44,7 @@ export const registerUserProfile = async (req: Request, res: Response) => {
 
     return res
       .status(200)
-      .json({ msg: "User profile registered successfully" });
+      .json({ msg: "User profile registered successfully", user: updatedUser });
   } catch (error) {
     return res.status(500).json({ message: "Server error", error });
   }

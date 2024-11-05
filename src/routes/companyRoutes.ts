@@ -5,7 +5,7 @@ import { validateCompanyRegistration } from "@/validations/companyValidation";
 const companyRoute = express.Router();
 
 companyRoute.post(
-  "/register/company/:id",
+  "/register/companyProfile/:id",
   validateCompanyRegistration,
   registerCompany
 );
