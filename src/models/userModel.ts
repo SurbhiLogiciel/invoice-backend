@@ -1,11 +1,13 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema, Model, Document } from "mongoose";
+
 interface User extends Document {
-  companyId: string;
   fullName: string;
   email: string;
   otp: number;
   phoneNumber: string;
   password: string;
+  plan: string;
+  companyId: string;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -14,7 +16,9 @@ const UserSchema: Schema<User> = new Schema({
   password: { type: String, minlength: 4, maxlength: 10 },
   email: { type: String, unique: true },
   otp: { type: Number },
+  plan: { type: String },
   phoneNumber: { type: String, minlength: 10, maxlength: 10 },
 });
 
-export const UserModel = mongoose.model<User>("User", UserSchema);
+const userModel: Model<User> = mongoose.model<User>("User", UserSchema);
+export default userModel;

@@ -1,4 +1,11 @@
+# Ignore the JS build directory
+/js/
+/dist
+
+# Ignore environment variables file
 .env
+
+# Ignore node_modules directory
 node_modules/*
 eslint.config.mjs.backup
 js/*

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 
 export const sendOTPEmail = async (
   email: string,
-  otp: number,
+  otp: number
 ): Promise<void> => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -20,7 +20,6 @@ export const sendOTPEmail = async (
   };
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
   } catch (error) {
     console.log("Error occured while sending email ", error);
   }

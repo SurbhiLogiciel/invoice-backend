@@ -39,7 +39,8 @@
     "@types/jest": "^29.5.13",
     "@types/joi": "^17.2.2",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/mongoose": "^5.11.96",
+    "@types/mongodb": "^4.0.7",
+    "@types/mongoose": "^5.11.97",
     "@types/nodemailer": "^6.4.15",
     "@types/typescript": "^0.4.29",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
@@ -55,7 +56,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "lint-staged": "^15.2.10",
-    "mongoose": "^8.6.1",
+    "mongoose": "^8.6.2",
     "nodemailer": "^6.9.15",
     "prettier": "^3.3.3",
     "pretty-quick": "^4.0.0",
@@ -64,8 +65,21 @@
     "typescript-eslint": "^8.3.0"
   },
   "dependencies": {
-    "crypto": "^1.0.1"
+    "@types/joi": "^17.2.3",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "joi": "^17.13.3",
+    "mongo": "^0.1.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SurbhiLogiciel/invoice-backend.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/SurbhiLogiciel/invoice-backend/issues"
+  },
+  "homepage": "https://github.com/SurbhiLogiciel/invoice-backend#readme"
 }
