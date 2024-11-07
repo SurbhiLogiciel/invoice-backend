@@ -9,6 +9,8 @@ import {
   otpVerification,
   userLogin,
   dummyApi,
+  registerUserPlan,
+  applyPromoCode,
 } from "@/controllers/userController";
 
 const userRoute = express.Router();
@@ -32,7 +34,8 @@ userRoute.post(
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);
 userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);
 
-// userRoute.post("/user/select-plan", selectPlan);
+userRoute.post("/user/selectPlan/:id", registerUserPlan);
+userRoute.post("/user/applyPromoCode/:id", applyPromoCode);
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);
 userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);
 
