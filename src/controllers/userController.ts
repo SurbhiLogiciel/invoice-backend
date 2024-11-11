@@ -104,6 +104,73 @@ export const otpVerification = async (
   }
 };
 
+export const registerUserPlan = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const userId = new mongoose.Types.ObjectId(id);
+
+  const { plan, amount, discount, total } = req.body;
+
+  try {
+    const user = await userModel.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          plan,
+          amount,
+        },
+      },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "Plan selected successfully", user });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to select plan", error });
+  }
+};
+
+const validPromoCodes = {
+  SAVE05: 5,
+  SAVE10: 10,
+  SAVE15: 15,
+} as const;
+
+export const applyPromoCode = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const userId = new mongoose.Types.ObjectId(id);
+  const { promoCode, amount } = req.body;
+
+  try {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const discount = validPromoCodes[promoCode as keyof typeof validPromoCodes];
+
+    if (discount === undefined) {
+      return res.status(400).json({ message: "Invalid promo code" });
+    }
+
+    if (isNaN(user.amount) || isNaN(discount)) {
+      return res.status(400).json({ message: "Invalid amount or discount" });
+    }
+
+    user.discount = discount;
+    user.total = amount - discount;
+
+    await user.save();
+
+    res.json({ message: "Promo code applied successfully", discount });
+  } catch (error) {
+    console.error("Error in applyPromoCode:", error);
+    res.status(500).json({ message: "Error applying promo code" });
+  }
+};
 export const userLogin = async (
   req: Request,
   res: Response

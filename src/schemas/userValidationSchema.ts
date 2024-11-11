@@ -7,4 +7,8 @@ export const userValidation = Joi.object({
   otp: Joi.number().integer(),
   phoneNumber: Joi.string().min(10).max(10),
   companyId: Joi.string(),
+  plan: Joi.string(),
+  amount: Joi.number(),
+  discount: Joi.number(),
+  total: Joi.number(),
 });

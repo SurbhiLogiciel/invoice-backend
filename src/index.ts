@@ -1,20 +1,21 @@
 import express from "express";
+import dotenv from "dotenv";
+import { PORT } from "./config/config";
 import { Connection } from "./db";
-// import dotenv from "dotenv";
 
 import userRoute from "./routes/userRoutes";
 import cors from "cors";
 import companyRoute from "./routes/companyRoutes";
+dotenv.config();
 
 const app = express();
-const PORT = 3001;
 
-Connection("mongodb://127.0.0.1:27017/InvoiceDB");
+Connection(process.env.URL);
 
 const corsOptions = {
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: process.env.CORS_ORIGIN,
+  methods: process.env.CORS_METHODS?.split(","),
+  allowedHeaders: process.env.CORS_HEADERS?.split(","),
 };
 
 app.use(cors(corsOptions));
