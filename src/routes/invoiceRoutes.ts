@@ -1,7 +1,9 @@
 import express, { Router } from "express";
 import { invoiceListing } from "@/controllers/invoiceListingController";
-const invoiceRouter = express.Router()
+import { createInvoice } from "@/controllers/invoiceController";
+const invoiceRouter = express.Router();
 
-invoiceRouter.get('/invoiceList/:id',invoiceListing);
+invoiceRouter.get("/invoiceList/:id", invoiceListing);
+invoiceRouter.post("/invoices/:id", createInvoice);
 
 export default invoiceRouter;
