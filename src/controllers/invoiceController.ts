@@ -16,14 +16,12 @@ export const createInvoice = async (req: Request, res: Response) => {
       items,
     } = req.body;
 
-    // Validate and convert the user ID
     const { id } = req.params;
     const userId = new mongoose.Types.ObjectId(id);
     if (!userId) {
       return res.status(400).json({ message: "User ID is required." });
     }
 
-    // Check for required fields
     if (
       !companyName ||
       !streetAddress ||
@@ -37,10 +35,8 @@ export const createInvoice = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    // Generate a unique 5-digit invoice number
     const invoiceNumber = crypto.randomInt(10000, 99999).toString();
 
-    // Calculate total for each item
     const formattedItems = items.map((item: any) => ({
       itemName: item.itemName,
       qty: item.qty,
@@ -48,10 +44,13 @@ export const createInvoice = async (req: Request, res: Response) => {
       total: item.qty * item.price,
     }));
 
-    // Set the createdAt field to the current date
+    const amount = formattedItems.reduce(
+      (sum: number, item: { total: number }) => sum + item.total,
+      0
+    );
+
     const createdAt = new Date();
 
-    // Create a new invoice
     const invoice = new invoiceModel({
       userId,
       invoiceNumber,
@@ -63,10 +62,10 @@ export const createInvoice = async (req: Request, res: Response) => {
       issueDate,
       paymentTerms,
       items: formattedItems,
-      createdAt, // Include createdAt field
+      amount,
+      createdAt,
     });
 
-    // Save the invoice to the database
     await invoice.save();
 
     res.status(201).json({ message: "Invoice created successfully", invoice });

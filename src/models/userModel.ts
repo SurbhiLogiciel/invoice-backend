@@ -26,5 +26,11 @@ const UserSchema: Schema<User> = new Schema({
   total: { type: Number, default: 0 },
 });
 
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  status: { type: String, enum: ["pending", "paid"] },
+});
+
 const userModel: Model<User> = mongoose.model<User>("User", UserSchema);
 export default userModel;

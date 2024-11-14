@@ -15,7 +15,10 @@ interface InvoiceDocument extends Document {
     price: number;
     total: number;
   }>;
+  amount: number;
   createdAt: Date;
+  status: string;
+  userId: string;
 }
 
 const InvoiceSchema = new Schema<InvoiceDocument>({
@@ -35,7 +38,10 @@ const InvoiceSchema = new Schema<InvoiceDocument>({
       total: { type: Number, required: true },
     },
   ],
-  createdAt: { type: Date, default: Date.now }, // Default value to current date
+  amount: { type: Number, required: true },
+  createdAt: { type: Date, default: Date.now },
+  status: { type: String, required: true, default: "pending" },
+  userId: { type: String, required: true },
 });
 
 const Invoice = mongoose.model<InvoiceDocument>("Invoice", InvoiceSchema);
