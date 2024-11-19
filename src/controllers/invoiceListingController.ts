@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import userModel from "@/models/userModel";
-import mongoose from "mongoose";
 
 export const invoiceListing = async (
   req: Request,
@@ -35,7 +34,7 @@ export const invoiceListing = async (
   }
 };
 
-// export const updateStatus = async(req: Request, res: Response): Promise<Response> => {
+// export const updateStatus = async(req: Request, res: Response): Promise<Response> => {y
 //   const { id } = req.params;
 //   const user = await userModel.findByIdAndUpdate({});
 

@@ -178,6 +178,7 @@ export const userLogin = async (
   const { email, password } = req.body;
 
   try {
+    const { id } = req.params
     const user = await userModel.findOne({ email });
 
     if (!user) {
@@ -194,7 +195,9 @@ export const userLogin = async (
       expiresIn: "1h",
     });
 
-    return res.status(200).json({ msg: "User logged in Successfully", token });
+    return res
+      .status(200)
+      .json({ msg: "User logged in Successfully", token, userId: user._id });
   } catch (error) {
     return res.status(500).json({ msg: "User login failed", error });
   }
