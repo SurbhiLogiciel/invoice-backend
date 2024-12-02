@@ -13,10 +13,8 @@ const app = express();
 
 Connection(process.env.URL);
 
-
-
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3001",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -26,7 +24,6 @@ app.use(express.json());
 app.use("/api", userRoute);
 app.use("/api", companyRoute);
 app.use("/api", invoiceRouter)
-// app.use("/api", adminRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
