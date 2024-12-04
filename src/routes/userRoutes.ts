@@ -12,6 +12,8 @@ import {
   registerUserPlan,
   applyPromoCode,
 } from "@/controllers/userController";
+import { logout } from "@/controllers/logoutUserController";
+
 
 const userRoute = express.Router();
 userRoute.post(
@@ -38,5 +40,7 @@ userRoute.post("/user/selectPlan/:id", registerUserPlan);
 userRoute.post("/user/applyPromoCode/:id", applyPromoCode);
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);
 userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);
+
+userRoute.post("/logout", verifyToken, logout);
 
 export default userRoute;
