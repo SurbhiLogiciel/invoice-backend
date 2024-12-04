@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api", userRoute);
 app.use("/api", companyRoute);
-app.use("/api", invoiceRouter)
+app.use("/api", invoiceRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
