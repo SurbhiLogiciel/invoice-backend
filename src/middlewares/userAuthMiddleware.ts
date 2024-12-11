@@ -1,5 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import { BlacklistModel } from "@/models/blackListModel";
 import { JWT_SECRET } from "@/utils.ts/generateToken";
 
 declare module "express" {
@@ -8,15 +9,25 @@ declare module "express" {
   }
 }
 
-export const verifyToken = (
+export const verifyToken = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const authHeader = req.headers.authorization;
 
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
+  if (!authHeader) {
+    return res.status(401).json({ msg: "Token missing" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const isBlacklisted = await BlacklistModel.findOne({ token });
+    if (isBlacklisted) {
+      return res.status(403).json({ message: "Token has been invalidated" });
+    }
+
     jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
         return res.status(403).json({ message: "Invalid token" });
@@ -24,7 +35,8 @@ export const verifyToken = (
       req.user = user;
       next();
     });
-  } else {
-    return res.status(401).json({ msg: "Token missing" });
+  } catch (error) {
+    console.error("Error verifying token:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
