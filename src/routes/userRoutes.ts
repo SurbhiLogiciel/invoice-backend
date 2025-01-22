@@ -13,7 +13,7 @@ import {
   applyPromoCode,
 } from "@/controllers/userController";
 import { logout } from "@/controllers/logoutUserController";
-
+import { sendUserNotificationEmail } from "@/controllers/invoiceController";
 
 const userRoute = express.Router();
 userRoute.post(
@@ -32,6 +32,8 @@ userRoute.post(
   validateRequest(userValidation),
   otpVerification
 );
+
+userRoute.post("/sendUserNotification", sendUserNotificationEmail);
 
 userRoute.post("/user/login", validateRequest(userValidation), userLogin);
 userRoute.get("/dummy", validateRequest(userValidation), verifyToken, dummyApi);

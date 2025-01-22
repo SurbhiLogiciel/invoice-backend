@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import crypto from "crypto";
 import invoiceModel from "@/models/invoiceModel";
+import { sendMsgEmail } from "@/utils.ts/sendMsgEmail";
+import userModel from "@/models/userModel";
 
 export const createInvoice = async (req: Request, res: Response) => {
   try {
@@ -75,5 +77,27 @@ export const createInvoice = async (req: Request, res: Response) => {
     res.status(201).json(invoice);
   } catch (error) {
     res.status(500).json({ message: "Failed to create invoice." });
+  }
+};
+
+export const sendUserNotificationEmail = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const { userId, message } = req.body;
+
+  try {
+    const user = await userModel.findById(userId);
+    if (!user || !user.email) {
+      return res
+        .status(404)
+        .json({ msg: "User not found or email unavailable." });
+    }
+
+    await sendMsgEmail(user.email, message);
+
+    return res.status(200).json({ msg: "Email sent successfully." });
+  } catch (error) {
+    return res.status(500).json({ msg: "Error sending email.", error });
   }
 };
